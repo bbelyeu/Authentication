@@ -7,13 +7,25 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController 
 {
-
     /**
      * Scaffold
      *
      * @var mixed
      */
 	public $scaffold = 'admin';
+
+    /**
+     * The components array allows you to set which Components a controller will use
+     * Tell Cake what components to use in conjunction with the current controller
+     * This gets merged with the child controllers components
+     * Default components no longer need to be redeclared
+     * Some components may need configured when declaring
+     *
+     * @link http://book.cakephp.org/2.0/en/controllers.html#components-helpers-and-uses
+     * @link http://book.cakephp.org/2.0/en/controllers/components.html#configuring-components
+     * @var array
+     */
+    public $components = array('Session');
 
     public function logout() 
     {
