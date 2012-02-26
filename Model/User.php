@@ -6,8 +6,8 @@ App::uses('AppModel', 'Model');
  *
  * @property EmployerAccount $EmployerAccount
  */
-class User extends AppModel {
-
+class User extends AppModel 
+{
     /**
      * Display field
      *
