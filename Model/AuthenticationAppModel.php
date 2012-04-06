@@ -1,6 +1,6 @@
 <?php
 
-class AuthenticationAppModel extends AppModel {
+class AuthenticationAppModel extends AppModel
+{
 
 }
-

@@ -1,10 +1,10 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * User Model
  *
- * @property EmployerAccount $EmployerAccount
  */
 class User extends AppModel 
 {
@@ -32,21 +32,6 @@ class User extends AppModel
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-    /**
-     * hasOne associations
-     *
-     * @var array
-     */
-	public $hasOne = array(
-		'EmployerAccount' => array(
-			'className' => 'EmployerAccount',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 
     public function beforeSave($options = array())
     {

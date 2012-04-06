@@ -5,6 +5,4 @@ CREATE TABLE `users` (
     `created` datetime NOT NULL,
     `modified` datetime NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Default users table for authentication';
-
-insert into users values (1, 'admin@brandrea.com', 'a13967f901f6f2cead8e897fc5514ee9741f74fb', NOW(), NOW());
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Default users table for authentication';
