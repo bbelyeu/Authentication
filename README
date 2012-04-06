@@ -9,7 +9,7 @@ Steps:
         it never loads the routes correctly
 
 3. Before enabling the component, navigate to:
-    /admin/authentication/users/add
+    /admin/users/add
     And add a default user you can login to the site with.
 
 4. Enable Auth component by adding it to AppController like so:
