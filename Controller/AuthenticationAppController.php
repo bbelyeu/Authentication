@@ -1,6 +1,5 @@
 <?php
 
-class AuthenticationAppController extends AppController {
-
+class AuthenticationAppController extends AppController 
+{
 }
-

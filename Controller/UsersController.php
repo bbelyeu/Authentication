@@ -27,11 +27,21 @@ class UsersController extends AppController
      */
     public $components = array('Session');
 
+    /**
+     * Magic Auth component logout
+     *
+     * @return null
+     */
     public function logout() 
     {
         $this->redirect($this->Auth->logout());
     }
 
+    /**
+     * Magic Auth component login
+     *
+     * @return null
+     */
     public function login() 
     {
         if ($this->request->is('post')) {
@@ -43,13 +53,47 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * Register a new admin user
+     *
+     * @return null
+     */
     public function admin_register() 
     {
+        /*
         if ($this->User->save($this->request->data)) {
             $id = $this->User->id;
-            $this->request->data['User'] = array_merge($this->request->data["User"], array('id' => $id));
+            $this->request->data['User'] = array_merge($this->request->data['User'], array('id' => $id));
             $this->Auth->login($this->request->data['User']);
             $this->redirect('/admin/users');
         }
+        */
     }
+
+    /**
+     * Allow an admin user to change their password
+     *
+     * @return null
+     */
+    public function admin_changepassword()
+    {
+        if ($this->request->is('post')) {
+            // only allow request is for currently logged in user
+            if ($this->request->data['User']['id'] == $this->Auth->user('id')) {
+                // make sure passwords match
+                if ($this->request->data['password'] === $this->request->data['password2']) {
+                    $this->User->read(null, $this->Auth->user('id'));
+                    $this->User->set('password', $this->request->data['password']);
+                    $this->User->save();
+                    $this->Session->setFlash(__("You've successfully updated your password!"));
+                    $this->redirect('/admin');
+                } else {
+                    $this->Session->setFlash(__('Passwords do not match. Please try again.'));
+                }
+            }
+        }
+
+        $this->set('user_id', $this->Auth->user('id'));
+    }
+
 }

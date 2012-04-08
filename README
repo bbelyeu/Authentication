@@ -20,10 +20,10 @@ Steps:
                 'controller' => 'Users',
                 'action' => 'login',
                 'plugin' => 'Authentication',
-                'admin' => false,
             ),
             'userModel' => 'Authentication.User',
             'authenticate' => array('Form'),
+            'authorize' => 'Controller',
         ),
         ...
     );
