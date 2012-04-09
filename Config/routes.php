@@ -9,6 +9,13 @@ Router::connect('/login', array(
 Router::connect('/admin/login', array(
     'plugin' => 'Authentication',
     'controller' => 'Users',
+    'action' => 'login',
+    'prefix' => 'admin'
+));
+
+Router::connect('/admin/Authentication/Users/login', array(
+    'plugin' => 'Authentication',
+    'controller' => 'Users',
     'action' => 'login'
 ));
 

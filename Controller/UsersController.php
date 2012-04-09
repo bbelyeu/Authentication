@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * Users Controller
@@ -38,11 +39,37 @@ class UsersController extends AppController
     }
 
     /**
+     * Magic Auth component logout
+     *
+     * @return null
+     */
+    public function admin_logout() 
+    {
+        $this->redirect($this->Auth->logout());
+    }
+
+    /**
      * Magic Auth component login
      *
      * @return null
      */
     public function login() 
+    {
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->redirect());
+            } else {
+                $this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
+            }
+        }
+    }
+
+    /**
+     * Magic Auth component login
+     *
+     * @return null
+     */
+    public function admin_login() 
     {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
@@ -83,7 +110,7 @@ class UsersController extends AppController
                 // make sure passwords match
                 if ($this->request->data['password'] === $this->request->data['password2']) {
                     $this->User->read(null, $this->Auth->user('id'));
-                    $this->User->set('password', $this->request->data['password']);
+                    $this->User->set('password',  AuthComponent::password($this->request->data['password']));
                     $this->User->save();
                     $this->Session->setFlash(__("You've successfully updated your password!"));
                     $this->redirect('/admin');
@@ -114,6 +141,17 @@ class UsersController extends AppController
 		}
 		$users = $this->User->find('list');
         $this->set('users', $users);
+    }
+
+    /**
+     * Allow admin_login to get through the Auth component
+     *
+     * @return null
+     */
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+        $this->Auth->allow('admin_login');
     }
 
 }
