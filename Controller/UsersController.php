@@ -35,6 +35,7 @@ class UsersController extends AppController
      */
     public function logout() 
     {
+        $this->Session->setFlash("You've been logged out.");
         $this->redirect($this->Auth->logout());
     }
 
@@ -45,6 +46,7 @@ class UsersController extends AppController
      */
     public function admin_logout() 
     {
+        $this->Session->setFlash("You've been logged out.");
         $this->redirect($this->Auth->logout());
     }
 
@@ -55,6 +57,12 @@ class UsersController extends AppController
      */
     public function login() 
     {
+        // if user is already logged in redirect
+        $logged_in = $this->Auth->user();
+        if (!empty($logged_in)) {
+            $this->redirect('/');
+        }
+
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 return $this->redirect($this->Auth->redirect());
@@ -71,6 +79,12 @@ class UsersController extends AppController
      */
     public function admin_login() 
     {
+        // if user is already logged in redirect
+        $logged_in = $this->Auth->user();
+        if (!empty($logged_in)) {
+            $this->redirect('/admin');
+        }
+
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 return $this->redirect($this->Auth->redirect());
