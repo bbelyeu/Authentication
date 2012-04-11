@@ -1,22 +1,29 @@
+<?php App::uses('User', 'Authentication.Model'); ?>
 <div class="users form">
 <?php
     echo $this->Session->flash('auth');
     echo $this->Form->create('User');
-    echo $this->Form->input('username');
+    echo $this->Form->input('username', array(
+        'label' => 'Username/Email'
+    ));
     echo $this->Form->input('password');
-    $options = array(
-        'admin' => 'Admin',
-        'agent' => 'Agent',
-        'editor' => 'Editor',
-        'manager' => 'Manager'
-    );
-    echo $this->Form->select('role', $options);
-    echo $this->Form->end('Create');
+    echo $this->Form->input('password2', array(
+        'label' => 'Repeat Password',
+        'type' => 'password'
+    ));?>
+    <div class="clearfix">
+<?php 
+    echo $this->Form->label('User.role', 'Select a role');
+    echo $this->Form->select('role', User::$roles);
+?>
+    </div>
+<?php 
+    echo $this->Form->end(__('Create')); 
 ?>
 </div>
 <div class="actions">
-    <h3>Actions</h3>
+    <h3><?php echo __('Actions')?></h3>
     <ul>
-        <li><a href="/admin/ulusers">List Users</a></li>
+		<li><?php echo $this->Html->link(__('List Users'), '/admin/users');?></li>
     </ul>
 </div>

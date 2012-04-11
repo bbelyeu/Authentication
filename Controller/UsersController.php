@@ -138,16 +138,18 @@ class UsersController extends AuthenticationAppController
     public function admin_add()
     {
 		if ($this->request->is('post')) {
-			$this->User->create();
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
+            if ($this->request->data['User']['password'] === $this->request->data['User']['password2']) {
+                $this->User->create();
+                if ($this->User->save($this->request->data)) {
+                    $this->Session->setFlash(__('The user has been saved'));
+                    $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                }
+            } else {
+                $this->Session->setFlash(__('Passwords do not match. Please try again.'));
+            }
 		}
-		$users = $this->User->find('list');
-        $this->set('users', $users);
     }
 
     /**
@@ -189,16 +191,19 @@ class UsersController extends AuthenticationAppController
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
+            if ($this->request->data['User']['password'] === $this->request->data['User']['password2']) {
+                if ($this->User->save($this->request->data)) {
+                    $this->Session->setFlash(__('The user has been saved'));
+                    $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                }
+            } else {
+                $this->Session->setFlash(__('Passwords do not match. Please try again.'));
+            }
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
-		$this->set($user, $this->User);
     }
 
     /**

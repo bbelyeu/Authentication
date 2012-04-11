@@ -39,6 +39,12 @@ Router::connect('/admin/users', array(
     'prefix' => 'admin'
 ));
 
+Router::connect('/admin/users/:action', array(
+    'plugin' => 'Authentication',
+    'controller' => 'Users',
+    'prefix' => 'admin'
+));
+
 Router::connect('/admin/users/:action/:id', array(
     'plugin' => 'Authentication',
     'controller' => 'Users',

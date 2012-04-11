@@ -9,6 +9,21 @@ App::uses('AuthenticationAppModel', 'Authentication.Model');
 class User extends AuthenticationAppModel 
 {
     /**
+     * Enum fields for roles
+     * This is primarily used in View files to create select boxes
+     * Array key is the html select value
+     * Array value is the part displayed to the user
+     *
+     * @var array
+     */
+    public static $roles = array(
+        'Admin'     => 'Admin',
+        'Agent'     => 'Agent',
+        'Editor'    => 'Editor',
+        'Manager'   => 'Manager'
+    );
+
+    /**
      * Display field
      *
      * @var string

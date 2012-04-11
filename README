@@ -1,18 +1,23 @@
 CakePhp 2.x Plugin for easy implementation of the Auth Component
 
 Steps:
-1. Import Authentication/Config/Schema/users.sql file to cake db
+1. Figure out what user roles you're going to need first. Alter the 
+    users.sql file in Authentication/Config/Schema to reflect the 
+    necessary roles. Also modify the public static property $roles
+    inside Authentication/Model/User.php to the appropriate roles.
 
-2. Add the following line to your app/Config/bootstrap.php
+2. Import Authentication/Config/Schema/users.sql file to cake db
+
+3. Add the following line to your app/Config/bootstrap.php
     CakePlugin::load('Authentication', array('routes' => true));
     *** note: for some reason loadAll doesn't work with this plugin,
         it never loads the routes correctly
 
-3. Before enabling the component, navigate to:
+4. Before enabling the component, navigate to:
     /admin/users/add
     And add a default user you can login to the site with.
 
-4. Enable Auth component by adding it to AppController like so:
+5. Enable Auth component by adding it to AppController like so:
     public $components = array(
         ...
         'Auth' => array(
@@ -20,17 +25,39 @@ Steps:
                 'controller' => 'Users',
                 'action' => 'login',
                 'plugin' => 'Authentication',
+                'prefix' => 'admin',
             ),
+            'loginRedirect' => 'admin',
             'userModel' => 'Authentication.User',
             'authenticate' => array('Form'),
             'authorize' => 'Controller',
         ),
         ...
     );
+    *** If you want the plugin to manage users site wide and not just for
+        the admin remove the 'prefix' => 'admin' line along with probably 
+        changing the 'loginRedirect' line!
 
-3. Add this line to your layout where you want to display Auth messages:
+6. Add this line to your layout where you want to display Auth messages:
     <?php echo $this->Session->flash('auth'); ?>
 
+7. Finally, to use the controller authorization control, you need to add a 
+    method isAuthorized() to your controllers which returns a boolean.
+    For example, you could add the following to app/Controller/AppController.php:
+    public function isAuthorized($user = null)
+    {   
+        // Any registered user can access public functions
+        if (empty($this->params['prefix'])) {
+            return true;
+        } else if ($this->params['prefix'] === 'admin') {
+            // Admins can access any admin function
+            return (bool) ($user['role'] === 'Admin');
+        }   
+    }
+
+Notes:
+* All routes go through /admin/users or /admin/users/:action. If a different
+    route config is needed add it to Authentication/Config/routes.php
 
 Helpful links:
 http://book.cakephp.org/2.0/en/core-libraries/components/authentication.html
