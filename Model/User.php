@@ -1,12 +1,12 @@
 <?php
-App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('AuthenticationAppModel', 'Authentication.Model');
 
 /**
  * User Model
  *
  */
-class User extends AppModel 
+class User extends AuthenticationAppModel 
 {
     /**
      * Display field

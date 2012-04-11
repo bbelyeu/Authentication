@@ -1,12 +1,12 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('AuthenticationAppController', 'Authentication.Controller');
 App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * Users Controller
  *
  */
-class UsersController extends AppController 
+class UsersController extends AuthenticationAppController 
 {
     /**
      * Scaffold
