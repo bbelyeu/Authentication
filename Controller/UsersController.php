@@ -9,13 +9,6 @@ App::uses('AuthComponent', 'Controller/Component');
 class UsersController extends AuthenticationAppController 
 {
     /**
-     * Scaffold
-     *
-     * @var mixed
-     */
-	public $scaffold = 'admin';
-
-    /**
      * The components array allows you to set which Components a controller will use
      * Tell Cake what components to use in conjunction with the current controller
      * This gets merged with the child controllers components
@@ -155,6 +148,80 @@ class UsersController extends AuthenticationAppController
 		}
 		$users = $this->User->find('list');
         $this->set('users', $users);
+    }
+
+    /**
+     * Admin function to list all users
+     *
+     * @return void
+     */
+	public function admin_index() 
+    {
+		$this->User->recursive = 0;
+		$this->set('users', $this->paginate());
+	}
+
+    /**
+     * View info about a single user in the admin
+     *
+     * @param int $id
+     * @return null
+     */
+    public function admin_view($id)
+    {
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		$this->set('user', $this->User->read(null, $id));
+    }
+
+    /**
+     * Admin function to edit a user
+     *
+     * @param int $id
+     * @return null
+     */
+    public function admin_edit($id)
+    {
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if ($this->User->save($this->request->data)) {
+				$this->Session->setFlash(__('The user has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+			}
+		} else {
+			$this->request->data = $this->User->read(null, $id);
+		}
+		$this->set($user, $this->User);
+    }
+
+    /**
+     * Admin function to delete a user
+     *
+     * @param int $id
+     * @return null
+     */
+    public function admin_delete($id)
+    {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		if ($this->User->delete()) {
+			$this->Session->setFlash(__('User deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('User was not deleted'));
+		$this->redirect(array('action' => 'index'));
     }
 
     /**

@@ -28,7 +28,8 @@ Router::connect('/logout', array(
 Router::connect('/admin/logout', array(
     'plugin' => 'Authentication',
     'controller' => 'Users',
-    'action' => 'logout'
+    'action' => 'logout',
+    'prefix' => 'admin'
 ));
 
 Router::connect('/admin/users', array(
@@ -38,8 +39,11 @@ Router::connect('/admin/users', array(
     'prefix' => 'admin'
 ));
 
-Router::connect('/admin/users/:action', array(
+Router::connect('/admin/users/:action/:id', array(
     'plugin' => 'Authentication',
     'controller' => 'Users',
     'prefix' => 'admin'
+), array(
+    'pass' => array('id'),
+    'id' => '[0-9]+'
 ));
