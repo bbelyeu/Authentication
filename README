@@ -27,7 +27,7 @@ Steps:
                 'plugin' => 'Authentication',
                 'prefix' => 'admin',
             ),
-            'loginRedirect' => 'admin',
+            'loginRedirect' => '/admin',
             'userModel' => 'Authentication.User',
             'authenticate' => array('Form'),
             'authorize' => 'Controller',
