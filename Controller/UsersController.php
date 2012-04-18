@@ -53,7 +53,7 @@ class UsersController extends AuthenticationAppController
         // if user is already logged in redirect
         $logged_in = $this->Auth->user();
         if (!empty($logged_in)) {
-            $this->redirect('/');
+            $this->redirect('/admin');
         }
 
         if ($this->request->is('post')) {
