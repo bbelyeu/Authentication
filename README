@@ -31,6 +31,8 @@ Steps:
 3. Add this line to your layout where you want to display Auth messages:
     <?php echo $this->Session->flash('auth'); ?>
 
+*** If you'd like to use Controller level authorization, checkout the branch
+	"ControllerAuthorize"
 
 Helpful links:
 http://book.cakephp.org/2.0/en/core-libraries/components/authentication.html
