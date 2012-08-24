@@ -38,10 +38,13 @@ Steps:
         the admin remove the 'prefix' => 'admin' line along with probably 
         changing the 'loginRedirect' line!
 
-6. Add this line to your layout where you want to display Auth messages:
+6. Now you need to unblock the admin_login page by uncommenting 
+	"$this->Auth->allow('admin_login');" in the UsersController.
+
+7. Add this line to your layout where you want to display Auth messages:
     <?php echo $this->Session->flash('auth'); ?>
 
-7. Finally, to use the controller authorization control, you need to add a 
+8. Finally, to use the controller authorization control, you need to add a 
     method isAuthorized() to your controllers which returns a boolean.
     For example, you could add the following to app/Controller/AppController.php:
     public function isAuthorized($user = null)
@@ -58,6 +61,12 @@ Steps:
 Notes:
 * All routes go through /admin/users or /admin/users/:action. If a different
     route config is needed add it to Authentication/Config/routes.php
+*** If you're having issues with login sticking (getting immediately logged back out)
+	edit Config/core.php and make sure the Session is set to save to cache
+	(have specifically had issues with setting it to 'php') like so:
+	Configure::write('Session', array(
+		'defaults'  => 'cache',
+	));
 
 Helpful links:
 http://book.cakephp.org/2.0/en/core-libraries/components/authentication.html
