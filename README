@@ -17,7 +17,9 @@ Steps:
     /admin/users/add
     And add a default user you can login to the site with.
 
-5. Enable Auth component by adding it to AppController like so:
+5. After adding your user, modify Controller/UsersController.php and uncomment the 'Auth' component property. Also uncomment the Auth->allow() in beforeFilter().
+
+6. Enable Auth component by adding it to AppController like so:
     public $components = array(
         ...
         'Auth' => array(
@@ -38,13 +40,13 @@ Steps:
         the admin remove the 'prefix' => 'admin' line along with probably 
         changing the 'loginRedirect' line!
 
-6. Now you need to unblock the admin_login page by uncommenting 
+7. Now you need to unblock the admin_login page by uncommenting 
 	"$this->Auth->allow('admin_login');" in the UsersController.
 
-7. Add this line to your layout where you want to display Auth messages:
+8. Add this line to your layout where you want to display Auth messages:
     <?php echo $this->Session->flash('auth'); ?>
 
-8. Finally, to use the controller authorization control, you need to add a 
+9. Finally, to use the controller authorization control, you need to add a 
     method isAuthorized() to your controllers which returns a boolean.
     For example, you could add the following to app/Controller/AppController.php:
     public function isAuthorized($user = null)

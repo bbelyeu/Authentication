@@ -19,6 +19,7 @@ class UsersController extends AuthenticationAppController
      * @link http://book.cakephp.org/2.0/en/controllers/components.html#configuring-components
      * @var array
      */
+    //public $components = array('Session', 'Auth');
     public $components = array('Session');
 
     /**
@@ -142,7 +143,7 @@ class UsersController extends AuthenticationAppController
                 $this->User->create();
                 if ($this->User->save($this->request->data)) {
                     $this->Session->setFlash(__('The user has been saved'));
-                    $this->redirect(array('action' => 'index'));
+                    $this->redirect('/admin/users');
                 } else {
                     $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
                 }
@@ -194,7 +195,7 @@ class UsersController extends AuthenticationAppController
             if ($this->request->data['User']['password'] === $this->request->data['User']['password2']) {
                 if ($this->User->save($this->request->data)) {
                     $this->Session->setFlash(__('The user has been saved'));
-                    $this->redirect(array('action' => 'index'));
+                    $this->redirect('/admin/users');
                 } else {
                     $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
                 }
@@ -223,10 +224,10 @@ class UsersController extends AuthenticationAppController
 		}
 		if ($this->User->delete()) {
 			$this->Session->setFlash(__('User deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->redirect('/admin/users');
 		}
 		$this->Session->setFlash(__('User was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		$this->redirect('/admin/users');
     }
 
     /**
@@ -237,7 +238,7 @@ class UsersController extends AuthenticationAppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('admin_login');
+        //$this->Auth->allow('admin_login', 'login');
     }
 
 }
