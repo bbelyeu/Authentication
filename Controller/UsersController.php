@@ -19,8 +19,7 @@ class UsersController extends AuthenticationAppController
      * @link http://book.cakephp.org/2.0/en/controllers/components.html#configuring-components
      * @var array
      */
-    //public $components = array('Session', 'Auth');
-    public $components = array('Session');
+    public $components = array('Session', 'Auth');
 
     /**
      * Magic Auth component logout
@@ -51,6 +50,7 @@ class UsersController extends AuthenticationAppController
      */
     public function login() 
     {
+        $this->redirect('/admin/users/login');
         // if user is already logged in redirect
         $logged_in = $this->Auth->user();
         if (!empty($logged_in)) {
@@ -238,7 +238,7 @@ class UsersController extends AuthenticationAppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        //$this->Auth->allow('admin_login', 'login');
+        $this->Auth->allow('admin_login', 'login');
     }
 
 }
