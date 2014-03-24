@@ -6,6 +6,12 @@ Router::connect('/login', array(
     'action' => 'login'
 ));
 
+Router::connect('/users/login', array(
+    'plugin' => 'Authentication',
+    'controller' => 'Users',
+    'action' => 'login'
+));
+
 Router::connect('/admin/login', array(
     'plugin' => 'Authentication',
     'controller' => 'Users',
